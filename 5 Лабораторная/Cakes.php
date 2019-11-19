@@ -113,7 +113,10 @@ $sql = "SELECT id,Date,name,price,code,quantity,addressImg FROM cakes WHERE dele
 $res = mysqli_query($mysqli,$sql);
 $i=1;
 while($row = mysqli_fetch_array($res)){
-	
+	$sql = "SELECT id FROM clients WHERE idCakes=".$row['id']."";
+	$result = mysqli_query($mysqli,$sql);
+	$j=0;
+	while($оrders = mysqli_fetch_array($result)){$j++;}
 	echo '<tr>
 	         <form  method="POST" >
 			 <input type="hidden" name="id" value="'.$row['id'].'">
@@ -124,7 +127,7 @@ while($row = mysqli_fetch_array($res)){
 				  <td>'.$row['price'].' rub.</td>
 				  <td>'.$row['code'].'</td>
 				  <td>'.$row['quantity'].'</td>
-				  <td><button class="btn btn-link"    type="submit" name="ViewOrders">View Orders</button></td>
+				  <td><button class="btn btn-link"    type="submit" name="ViewOrders">'.$j.'</button></td>
 				  <td><button class="btn btn-warning" type="submit" name="Edit" >Edit</button></th>
 				  <td><button class="btn btn-warning" type="submit" name="Delete" >Delete</button></th>
 				   
@@ -134,6 +137,7 @@ while($row = mysqli_fetch_array($res)){
 }
 
 mysqli_free_result($res);
+mysqli_free_result($result);
 mysqli_close($mysqli);
 
 ?> 
