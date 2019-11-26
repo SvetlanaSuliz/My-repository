@@ -159,6 +159,7 @@ var generateError = function (text) {
   return error;
 }
 
+  
 form.addEventListener('submit', function (event) {
   
   
@@ -230,13 +231,12 @@ form.addEventListener('submit', function (event) {
 	   Quantity.parentElement.insertBefore(error, Quantity);
   }
 
-   
   
   if (numbErrors==0) {return true;}
   else {event.preventDefault();
   }
 })
-
+ console.log(numbErrors);
   
 </script>
 </html>

@@ -121,7 +121,7 @@ while($row = mysqli_fetch_array($res)){
 	         <form  method="POST" >
 			 <input type="hidden" name="id" value="'.$row['id'].'">
 		        <th scope="row">'.$i.'</th>
-				  <td> <img src="'.$row['addressImg'].'"  alt="" width="100" height="75"> </td>
+				  <td> <img src="'.$row['addressImg'].'?t='.rand(0, 1000).'"  alt="" width="100" height="75"> </td>
 		          <td>'.$row['Date'].'</td>
 				  <td>'.$row['name'].'</td>
 				  <td>'.$row['price'].' rub.</td>
@@ -150,10 +150,9 @@ mysqli_close($mysqli);
 
 
   <div  style="margin-top: 30px; margin-bottom: 30px;" class="text-center">
-	
+  
                <a class="btn btn-warning btn-lg" role="button" href="Forma_add_cakes.php"><h3>Add Cake</h3></a>
-			  
-
+			   
   </div>
  
  

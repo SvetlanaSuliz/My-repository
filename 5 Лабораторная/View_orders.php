@@ -97,7 +97,7 @@
 
 // Удаление данных из таблицы
 if (isset($_POST['Delete'])){
-    $idOrder = $_POST['id'];
+    $idOrder = $_POST['idOrder'];
     $sql = 'DELETE FROM clients  WHERE id='.$idOrder.'';
 	$result = mysqli_query($mysqli,$sql);
 		
@@ -105,13 +105,13 @@ if (isset($_POST['Delete'])){
 
 // Изменение данных в таблице
  if (isset($_POST['Edit'])){
-	 $_SESSION['ID']=$_POST['id'];
+	 $_SESSION['IDOrder']=$_POST['idOrder'];
 	 header("Location: Forma_edit_order.php"); exit();
  }
 
 // Добавление заказчика
  if (isset($_POST['Add'])){
-	 $_SESSION['ID']=$_POST['id'];
+	
 	 header("Location: Forma_add_order.php"); exit();
  }
 
@@ -126,12 +126,12 @@ while($row = mysqli_fetch_array($res)){
 	
 	echo '<tr>
 	<form  method="POST" >
-			 <input type="hidden" name="id" value="'.$row['id'].'">
+			 <input type="hidden" name="idOrder" value="'.$row['id'].'">
 		        <th scope="row">'.$i.'</th>
 				  <td>'.$row['Name'].' '.$row['Surname'].' </td>
 		          <td>'.$row['Email'].'</td>
 				  <td>'.$row['City'].'</td>
-				  <td>'.$row['Address'].' rub.</td>
+				  <td>'.$row['Address'].'</td>
 				  <td>'.$row['Zip'].'</td>
 				  <td>'.$row['Quantity'].'</td>
 				  <td><button class="btn btn-warning" type="submit" name="Edit" >Edit</button></th>

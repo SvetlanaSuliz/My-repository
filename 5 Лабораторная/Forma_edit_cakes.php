@@ -74,8 +74,9 @@ if (isset($_POST['Date'])&& isset($_POST['Name']) && isset($_POST['Price'])&& is
     $sql = 'UPDATE cakes SET Date="'.$date.'", name="'.$name.'", price="'.$price.'", code='.$code.', quantity='.$quantity.', addressImg="'.$addressImg.'"   WHERE id='.$id.'';
    $result = mysqli_query($mysqli,$sql);  
    
+   $_SESSION['deleteImg']=false;
     mysqli_close($mysqli);
-	unset($_SESSION);
+	session_destroy(); 
 	header("Location: Cakes.php"); exit();
 }}
 
@@ -105,7 +106,7 @@ if (isset($_POST['Date'])&& isset($_POST['Name']) && isset($_POST['Price'])&& is
         <div class="row ">
 		<div class="col-md-3 mb-3">
 			    <p>Image</p>
-                <img <?php echo 'src="'.$addressImg.'"'; ?>   alt="" width="200" height="150">
+                <img <?php echo 'src="'.$addressImg.'?t='.rand(0, 1000).'"'; ?>   alt="" width="200" height="150">
 		 </div>
 		<div class="col-md-4 mb-3">
 			    <label class="text" for="Image">New image</label>

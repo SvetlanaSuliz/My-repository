@@ -24,8 +24,8 @@ session_start();
  $mysqli = mysqli_connect("localhost", "root", "","pastry_shop");
  
 // Вывод данных
- $id = $_SESSION['ID'];
-$sql = "SELECT 	Email,Name,Surname,City,Zip,Address,Quantity FROM clients WHERE idCakes=".$id."";
+ $id = $_SESSION['IDOrder'];
+$sql = "SELECT 	Email,Name,Surname,City,Zip,Address,Quantity FROM clients WHERE id=".$id."";
  $res=mysqli_query($mysqli,$sql);
  $row= mysqli_fetch_array($res);
 
