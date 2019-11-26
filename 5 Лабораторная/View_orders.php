@@ -56,8 +56,17 @@
   <section class="jumbotron text-center">
     
      <div class=" py-1 mb-2">
-    
-	  <h3 class="p-2 "  >Orders</h3>
+    <?php
+	session_start();
+    $mysqli = mysqli_connect("localhost", "root", "","pastry_shop");
+
+	$id = $_SESSION['ID'];
+	$sql= "SELECT name,addressImg FROM cakes WHERE id=".$id."";
+	$res = mysqli_query($mysqli,$sql);
+	$row = mysqli_fetch_array($res);
+	echo '<h3 class="p-2 ">Orders "'.$row['name'].'" <img src="'.$row['addressImg'].'?t='.rand(0, 1000).'"  alt="" width="100" height="75"></h3>';
+	?>
+	  
     
   </div>
   
@@ -75,23 +84,49 @@
       <th scope="col">Address</th>
       <th scope="col">Zip</th>
 	  <th scope="col">Quantity</th> 
+	  <th scope="col"></th> 
+      <th scope="col"></th> 
     </tr>
   </thead>
   <tbody>
 
 <?php	
-session_start();
-$mysqli = mysqli_connect("localhost", "root", "","pastry_shop");
-$id = $_SESSION['ID'];
+
+
+
+
+// Удаление данных из таблицы
+if (isset($_POST['Delete'])){
+    $idOrder = $_POST['id'];
+    $sql = 'DELETE FROM clients  WHERE id='.$idOrder.'';
+	$result = mysqli_query($mysqli,$sql);
+		
+}
+
+// Изменение данных в таблице
+ if (isset($_POST['Edit'])){
+	 $_SESSION['ID']=$_POST['id'];
+	 header("Location: Forma_edit_order.php"); exit();
+ }
+
+// Добавление заказчика
+ if (isset($_POST['Add'])){
+	 $_SESSION['ID']=$_POST['id'];
+	 header("Location: Forma_add_order.php"); exit();
+ }
+
 
 // Вывод таблицы
-$sql = "SELECT 	Email,Name,Surname,City,Zip,Address,Quantity FROM clients WHERE idCakes=".$id."";
+
+$sql = "SELECT 	id,Email,Name,Surname,City,Zip,Address,Quantity FROM clients WHERE idCakes=".$id."";
 $res = mysqli_query($mysqli,$sql);
 
 $i=1;
 while($row = mysqli_fetch_array($res)){
 	
 	echo '<tr>
+	<form  method="POST" >
+			 <input type="hidden" name="id" value="'.$row['id'].'">
 		        <th scope="row">'.$i.'</th>
 				  <td>'.$row['Name'].' '.$row['Surname'].' </td>
 		          <td>'.$row['Email'].'</td>
@@ -99,6 +134,9 @@ while($row = mysqli_fetch_array($res)){
 				  <td>'.$row['Address'].' rub.</td>
 				  <td>'.$row['Zip'].'</td>
 				  <td>'.$row['Quantity'].'</td>
+				  <td><button class="btn btn-warning" type="submit" name="Edit" >Edit</button></th>
+				  <td><button class="btn btn-warning" type="submit" name="Delete" >Delete</button></th>
+  </form>
 		 </tr>';
 	$i++;
 }
@@ -106,7 +144,9 @@ if($i==1){echo '<tr>
 				   <td></td>
 				   <td></td>
 				   <td></td>
+				   <td></td>
 				   <th scope="row" class="text-center">There were no orders</th>
+				   <td></td>
 				   <td></td>
 				   <td></td>
 				   <td></td>
@@ -119,10 +159,11 @@ mysqli_close($mysqli);
 </table>
 
   <div  style="margin-top: 30px; margin-bottom: 30px;" class="text-center">
-	
-               <a class="btn btn-warning" role="button" href="Cakes.php"><h3>Return</h3></a>
-			  
-
+  <form  method="POST" >
+			 <input type="hidden" name="id" <?php echo 'value="'.$id.'"'?> >
+			<a href="Cakes.php" class="btn btn-primary active" role="button" aria-pressed="true">Return</a>
+	           <button class="btn btn-warning" type="submit" name="Add" >Add order</button>
+  </form>
   </div>
  
  
